@@ -1,21 +1,23 @@
 import classNames from 'classnames/bind'
-import styles from './Button.module.scss'
 import { Link } from 'react-router-dom'
+import styles from './Button.module.scss'
 
 const cx = classNames.bind(styles)
 
 function Button({
   to,
   href,
-  primary,
+  primary = false,
   outline = false,
+  text = false,
+  rounded = false,
+  disabled = false,
   small = false,
   large = false,
-  text = false,
-  disabled = false,
-  rounded = false,
-  className,
   children,
+  className,
+  leftIcon,
+  rightIcon,
   onClick,
   ...passProps
 }) {
@@ -42,11 +44,22 @@ function Button({
     Comp = 'a'
   }
 
-  const classes = cx('wrapper', { primary, outline, small, large, text, disabled, rounded, [className]: className })
+  const classes = cx('wrapper', {
+    [className]: className,
+    primary,
+    outline,
+    text,
+    disabled,
+    rounded,
+    small,
+    large,
+  })
 
   return (
     <Comp className={classes} {...props}>
-      <span>{children}</span>
+      {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
+      <span className={cx('title')}>{children}</span>
+      {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
     </Comp>
   )
 }
