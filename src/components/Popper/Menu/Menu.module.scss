@@ -3,7 +3,9 @@
   padding-bottom: 8px;
 
   .menu-item {
+    display: flex;
     justify-content: flex-start;
+    width: 100%;
     margin-left: 0;
     border-radius: 0;
     font-weight: 600;
@@ -24,10 +26,15 @@
   padding-bottom: 8px;
 }
 
+.menu-body {
+  overflow-y: auto;
+}
+
 .header {
   position: relative;
   height: 50px;
   margin-top: -8px;
+  flex-shrink: 0;
 }
 
 .back-btn {
