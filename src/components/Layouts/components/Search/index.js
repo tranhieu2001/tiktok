@@ -6,9 +6,10 @@ import { useEffect, useRef, useState } from 'react'
 
 import AccountItem from '~/components/AccountItem'
 import { Wrapper as PopperWrapper } from '~/components/Popper'
-import styles from './Search.module.scss'
 import { useDebounce } from '~/hooks'
-
+import styles from './Search.module.scss'
+import * as searchServices from '~/apiServices/searchServices'
+import { SearchIcon } from '~/components/Icons'
 const cx = classNames.bind(styles)
 
 function Search() {
@@ -31,23 +32,30 @@ function Search() {
     setShowResult(false)
   }
 
+  const handleChange = (e) => {
+    const searchValue = e.target.value
+
+    if (!searchValue.startsWith(' ')) {
+      setSearchValue(searchValue)
+    }
+  }
+
   useEffect(() => {
     if (!debounced.trim()) {
       setSearchResult([])
       return
     }
 
-    setLoading(true)
+    const fetchApi = async () => {
+      setLoading(true)
 
-    fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
-      .then((res) => res.json())
-      .then((res) => {
-        setSearchResult(res.data)
-        setLoading(false)
-      })
-      .catch(() => {
-        setLoading(false)
-      })
+      const result = await searchServices.search(debounced)
+      setSearchResult(result)
+
+      setLoading(false)
+    }
+
+    fetchApi()
   }, [debounced])
   return (
     <HeadlessTippy
@@ -71,7 +79,7 @@ function Search() {
           value={searchValue}
           placeholder="Search account and video"
           spellCheck={false}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={handleChange}
           onFocus={() => setShowResult(true)}
         />
         {!!searchValue && !loading && (
@@ -81,8 +89,8 @@ function Search() {
         )}
 
         {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
-        <button className={cx('search-btn')}>
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
+          <SearchIcon />
         </button>
       </div>
     </HeadlessTippy>
