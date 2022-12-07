@@ -135,7 +135,6 @@ function Header() {
                 src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/a1586bb95f786e8d75315361ab166def~c5_100x100.jpeg?x-expires=1666533600&x-signature=KnaVQVRFOznoUIGJpzB30dyQQvs%3D"
                 className={cx('user-avtar')}
                 alt=""
-                fallback=""
               />
             ) : (
               <button className={cx('more-btn')}>

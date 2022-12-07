@@ -5,6 +5,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 import styles from './AccountPreview.module.scss'
 import Button from '~/components/Button'
+import Image from '~/components/Image'
 
 const cx = classNames.bind(styles)
 
@@ -12,7 +13,7 @@ function AccountPreview() {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>
-        <img
+        <Image
           className={cx('avatar')}
           src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/6f742a138c51cf4c6ac049ea6f6ff6b4~c5_100x100.jpeg?x-expires=1667368800&x-signature=ZFnejMiic4ZgGPsBL4M4uKn04Mc%3D"
           alt=""
